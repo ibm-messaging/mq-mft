@@ -24,6 +24,7 @@ package mft.samples;
  *  How to use this exit:
  *  
  *  Configuration:
+ *  1) Compile this source file.
  *  1) Stop your agent.
  *  2) Copy the DeleteFilesExit.class file under the following directory. 
  *     /<your MQ data directory>/mqft/config/<your coordination qmgr>/agents/<your agent name>/exits/mft/samples

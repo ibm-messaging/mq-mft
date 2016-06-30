@@ -3,35 +3,30 @@ package mft.samples;
  * Sample IBM MQ Managed File Transfer SourceTransferStartExit
  * 
  *  
- *  Where does this exit help?
+ *  Scenario where this exit helps
  *  
- *  There could be multiple files, like all files in a directory, are to be transferred as part 
- *  of one transfer request. When such a transfer request is submitted, it's possible that some
- *  of the files in the transfer request are successfully transferred and some fail to transfer
- *  for some reason. In such a case, the transfer is marked partial successful. If the transfer
- *  request specified "source_file_disposition" as "delete" (i.e. -sd delete), then the files
- *  which were transferred successfully are deleted at source and the files that failed to 
- *  transfer are left as it is.
+ *  Assume a there are a number of files in directory and user wants to transfer only
+ *  those files whose size matches a certain value. For example user wants transfer
+ *  only files whose size is between 10 and 12 mega bytes.
  *  
- *  Since the transfer was partially successful, the user submits the reuest again to transfer
- *  the remaining files. But this request fails as some of the files have been transferred in
- *  the previous attempt and were deleted. 
+ *  When a transfer is initiated, an agent would pick all files in the directory and 
+ *  transfer, no matter what the size of file is. With this exit, the agent would
+ *  transfer only those files that match specified size.
  *  
- *  This sample SourceTransferEndExit exit deletes the files after a transfer is 
- *  completed successfully. Files are not deleted if for some reason transfer fails
- *  or partially complete. 
  *  
  *  How to use this exit:
  *  
  *  Configuration:
+ *  1) Compile this source file.
  *  1) Stop your agent.
- *  2) Copy the DeleteFilesExit.class file under the following directory. 
+ *  2) Copy the FileFilterExit.class and accompanying config.xml file under the following 
+ *     directory. 
  *     /<your MQ data directory>/mqft/config/<your coordination qmgr>/agents/<your agent name>/exits/mft/samples
  *  3) Add the following line to your agent's agent.properties file
- *     sourceTransferEndExitClasses=mft.samples.DeleteFilesExit
+ *     sourceTransferStartExitClasses=mft.samples.FileFilterExit 
  *  4) Start your agent.
+ *  5) Submit transfers
  *  
- *  When submitting transfers ensure that source disposition is set to 'leave' i.e. '-sd leave'
  */
 
 import java.io.File;
