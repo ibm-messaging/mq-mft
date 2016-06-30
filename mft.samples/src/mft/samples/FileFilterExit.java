@@ -1,4 +1,38 @@
 package mft.samples;
+/**
+ * Sample IBM MQ Managed File Transfer SourceTransferStartExit
+ * 
+ *  
+ *  Where does this exit help?
+ *  
+ *  There could be multiple files, like all files in a directory, are to be transferred as part 
+ *  of one transfer request. When such a transfer request is submitted, it's possible that some
+ *  of the files in the transfer request are successfully transferred and some fail to transfer
+ *  for some reason. In such a case, the transfer is marked partial successful. If the transfer
+ *  request specified "source_file_disposition" as "delete" (i.e. -sd delete), then the files
+ *  which were transferred successfully are deleted at source and the files that failed to 
+ *  transfer are left as it is.
+ *  
+ *  Since the transfer was partially successful, the user submits the reuest again to transfer
+ *  the remaining files. But this request fails as some of the files have been transferred in
+ *  the previous attempt and were deleted. 
+ *  
+ *  This sample SourceTransferEndExit exit deletes the files after a transfer is 
+ *  completed successfully. Files are not deleted if for some reason transfer fails
+ *  or partially complete. 
+ *  
+ *  How to use this exit:
+ *  
+ *  Configuration:
+ *  1) Stop your agent.
+ *  2) Copy the DeleteFilesExit.class file under the following directory. 
+ *     /<your MQ data directory>/mqft/config/<your coordination qmgr>/agents/<your agent name>/exits/mft/samples
+ *  3) Add the following line to your agent's agent.properties file
+ *     sourceTransferEndExitClasses=mft.samples.DeleteFilesExit
+ *  4) Start your agent.
+ *  
+ *  When submitting transfers ensure that source disposition is set to 'leave' i.e. '-sd leave'
+ */
 
 import java.io.File;
 import java.io.InputStream;

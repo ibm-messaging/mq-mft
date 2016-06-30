@@ -1,5 +1,6 @@
+package mft.samples;
 /**
- * Sample IBM MQ Managed File Transfer SourceTransferExit
+ * Sample IBM MQ Managed File Transfer SourceTransferEndExit
  * 
  *  
  *  Where does this exit help?
@@ -32,7 +33,6 @@
  *  
  *  When submitting transfers ensure that source disposition is set to 'leave' i.e. '-sd leave'
  */
-package mft.samples;
 
 import java.io.File;
 import java.util.List;
