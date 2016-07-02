@@ -20,3 +20,6 @@ When a transfer is initiated, an agent would pick all files in the directory and
 
 More details in source file: https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/FileFilterExit.java
 
+##Other IBM MQ MFT Exits:
+File Ordering by Steve Parsons: https://github.com/ibm-messaging/mq-mft-file-ordering
+
