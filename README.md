@@ -20,6 +20,12 @@ When a transfer is initiated, an agent would pick all files in the directory and
 
 More details in source file: https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/FileFilterExit.java
 
+## 3. Archive Files Exit
+There are scenarios where it is required to archive the files in a source directory and move to a different place. ArchiveFiles exit extends the MFT functionality by providing the ability to archive files at source agent. The files at source agent are archived as zip file and copied to a folder.
+
+The path where the zip file is created can be specified using "ARCHIVE_PATH" key in transfer metadata. If the value specified to "ARCHIVE_PATH" points to a directory, then the zip file will be created in that directory with "archive<Current time in millisecond>.zip name, for example "archive123445858.zip". If the value points to a file, then a zip file with that name will be created. If "ARCHIVE_PATH" key is not specified, then the path of the first file in the transfer list will be used to create the zip file.
+
+
 ##Other IBM MQ MFT Exits:
 File Ordering by Steve Parsons: https://github.com/ibm-messaging/mq-mft-file-ordering
 
