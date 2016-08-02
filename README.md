@@ -1,6 +1,6 @@
 # IBM MQ Managed File Transfer 
 
-This repository is place for IBM MQ Managed File Transfer Exits that can be used for customizing the transfers. It is also place for "How To" documents, tips etc.
+This repository is the place for IBM MQ Managed File Transfer Exits that can be used for customizing the transfers. It is also place for "How To" documents, tips etc.
 
 ## 1. Delete Files Exit
 There could be multiple files, like all files in a directory, are to be transferred as part of one transfer request. When such a transfer request is submitted, it's possible that some of the files in the transfer request are successfully transferred and some fail to transfer
