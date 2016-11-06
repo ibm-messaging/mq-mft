@@ -13,7 +13,7 @@ This sample SourceTransferEndExit exit deletes the files after a transfer is com
 
 More details in source file: 
 
-     https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/DeleteFilesExit.java
+     [](https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/DeleteFilesExit.java)
 
 ## 2. Filter File Exit
 Assume a there are a number of files in directory and user wants to transfer only those files whose size matches a certain value. For example user wants transfer only files whose size is between 10 and 12 mega bytes.
@@ -22,7 +22,7 @@ When a transfer is initiated, an agent would pick all files in the directory and
 
 More details in source file: 
 
-     https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/FileFilterExit.java
+     [](https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/FileFilterExit.java)
 
 ## 3. Archive Files Exit
 There are scenarios where it is required to archive the files in a source directory and move to a different place. ArchiveFiles exit extends the MFT functionality by providing the ability to archive files at source agent. The files at source agent are archived as zip file and copied to a folder.
@@ -31,7 +31,7 @@ The path where the zip file is created can be specified using "ARCHIVE_PATH" key
 
 More details in source file: 
 
-    https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/ArchiveFiles.java
+    [](https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/ArchiveFiles.java)
 
 ## 4. Rename destination file based on MQMD attribute.
 IBM MQ Managed File Transfer can be used for transferring files from one point to another point in a MQ network. Apart from moving files, MFT can also move messages from a queue and write them as files at the destination i.e. Message-to-File transfer. MFT can also do File to Message transfer.
@@ -40,14 +40,14 @@ The Message-to-File transfer helps in integrating applications in solution where
 
 There can be scenarios where, in a Message-to-File transfer, the name of the destination file is required to be generated dynamically and is controlled by attribute on the first message. Typically a message propertis and variable substitution technique is used for this purpose as described in the link below:
 
-     http://www.ibm.com/support/knowledgecenter/en/SSFKSJ_7.5.0/com.ibm.wmqfte.doc/m2f_mon_variable.htm 
+     [](http://www.ibm.com/support/knowledgecenter/en/SSFKSJ_7.5.0/com.ibm.wmqfte.doc/m2f_mon_variable.htm )
 
 However there can be cases where a legacy applications putting messages to a queue does not have ability to set message properties. The application can set MQMD attributes though. Because of this the destination file name can't be dynamically controlled and set by the sender. This exit (and combination with accompanying RenameFile exit) helps in such scenario.
 
 More details in source files: 
 
-     https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/InsertMetadata.java
-     https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/RenameFile.java
+     [](https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/InsertMetadata.java)
+     [](https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/RenameFile.java)
 
 ##Other IBM MQ MFT Exits:
 File Ordering by Steve Parsons: https://github.com/ibm-messaging/mq-mft-file-ordering
