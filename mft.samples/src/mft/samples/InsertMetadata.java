@@ -60,10 +60,17 @@
  *
  *  How to configure agent to use the exit:
  *  1) Modify source agent's agent.properties file to add following:
- *     sourceTransferStartExitClasses=mft.samples.InsertMetadata
- *     enableQueueInputOutput=true
- *     exitClassPath=<mq installation>/com.ibm.mq.allclient.jar;
- *
+ *        
+ *          sourceTransferStartExitClasses=mft.samples.InsertMetadata
+ *          enableQueueInputOutput=true
+ *     If using MQ v8 or above, add the following to point MQ Java libraries.
+ *          exitClassPath=<mq installation>/java/lib/com.ibm.mq.allclient.jar; 
+ *     
+ *     If using MQ v7.5 or earlier, add the following to point MQ Java libraries.
+ *          exitClassPath=<mq installation>/java/lib/com.ibm.mq.jar;
+ *                        <mq installation>/java/lib/com.ibm.mq.commonservices.jar; 
+ *						  <mq installation>/java/lib/com.ibm.mq.jmqi.jar
+ *         
  ***************************************************************************
  */
 package mft.samples;
