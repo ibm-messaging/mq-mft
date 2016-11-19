@@ -59,7 +59,9 @@
  *     where messages are in a group.
  *
  *  How to configure agent to use the exit:
- *  1) Modify source agent's agent.properties file to add following:
+ *  1) Copy the compiled class file, InsertMetadata.class to the following directory:
+ *      <mq data directory>/mqft/config/<coordination qmgr name>/agents/<agent name>/exits/mft/samples
+ *  2) Modify source agent's agent.properties file to add following:
  *        
  *          sourceTransferStartExitClasses=mft.samples.InsertMetadata
  *          enableQueueInputOutput=true
