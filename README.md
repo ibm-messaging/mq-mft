@@ -49,6 +49,17 @@ More details in source files:
      https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/InsertMetadata.java
      https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/RenameFile.java
 
+## 5. Update source files list 
+The goal of this exit is to demonstrate how to update source file list. The exit searches the source directory for matching file names but with a different extension. For example if the source file specified by the create transfer request was dailytranactions.xml, then exit would search for dailytranactions.csv  dailytranactions.pdf etc and add to transfer list.
+
+The second and important aim of this exit is to demonstrate how to set the Source and Destination metadata for the files which are added to source file list. Setting source and destination metadata controls, for example, whether the source file is deleted after file is transffered or the destination file is overwritten if one already exists.
+
+More details in source file:
+
+https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/UpdateFileSpec.java
+
+
+
 ##Other IBM MQ MFT Exits:
 File Ordering by Steve Parsons: https://github.com/ibm-messaging/mq-mft-file-ordering
 
