@@ -13,7 +13,8 @@
 ;  Contributors:
 ;    Shashikanth Rao T - Initial Contribution
 ;***************************************************************************
-; This installation script is developed using a trial version of Inno Setup.
+; This installation script is developed using a trial version of Inno Setup
+; http://www.jrsoftware.org/isinfo.php
 ; The script demonstrates how MFT redistributable Agent binaries can be
 ; bundled into another product's installation package and deployed.
 ;***************************************************************************
@@ -46,11 +47,13 @@ ChangesEnvironment=yes
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
+; Location where MFT Redistributable package has been unzipped. All files under the folder and subfolders
+; will be picked up.
 Source: "C:\Downloads\IBM-MQFA-Redist-Win64\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
-; set PATH
+; Update the PATH variable.
 Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName:"BFG_DATA"; ValueData:"{code:GetAgentConfigDataPath}" ; Flags: preservestringtype ;
 
 [Run]
