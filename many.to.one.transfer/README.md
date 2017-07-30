@@ -11,7 +11,7 @@ To achive "Many to one file" transfer, this solution first runs a "File to Messa
 1) The script requires a queue "MFT.MANY.TO.ONE.Q" to be defined in destination agent's queue manager.
    Use runmqsc to create the queue: 
    
-	define ql(MFT.MANY.TO.ONE.Q)
+	`define ql(MFT.MANY.TO.ONE.Q)`
    
 2) Set access authority to queue for the user under which destination agent runs. This sample assumes the destination agent runs under use "samantha"
 
@@ -24,15 +24,15 @@ To achive "Many to one file" transfer, this solution first runs a "File to Messa
 
 	On Windows
 	
-	  commandPath=C:\\MFTCommands
-	  
-	  enableQueueInputOutput=true
+	  `commandPath=C:\\MFTCommands`
+	
+	  `enableQueueInputOutput=true`
 	  
 	On Unix/Linux
 	
-	  commandPath=/usr/mftcmds 
+	  `commandPath=/usr/mftcmds `
 	  
-	  enableQueueInputOutput=true
+	  `enableQueueInputOutput=true`
 
 5) Stop and Start the agent for the changes to get applied.
 
