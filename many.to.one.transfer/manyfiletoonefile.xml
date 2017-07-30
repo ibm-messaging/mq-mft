@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!---
+* =============================================================================
+* Many to one file transfer
+* =============================================================================
+* 
+* This sample demonstrates how to transfer many files present at source 
+* end as one file at destination.
+*
+* This script also demonstrates how to run dependent transfers i.e, the 
+* second transfer runs only if the first transfer is successful. 
+* 
+* 
+* The script uses two transfers to transfer set of files source endpoint
+* to a single file at destination endpoint. In the first step all files at
+* source are transferred as messages to a queue. In the second step messages
+* from that queue are transferred as one file.
+-->
+<project xmlns:fte="antlib:com.ibm.wmqfte.ant.taskdefs" default="doTransfer">
+	
+	<target name="doTransfer" depends="init, cleanup, messagetofile"></target>
+
+	<!-- Property initialization -->
+	<target name="init">
+		<!-- Wait time for first transfer to complete -->
+		<property name="PROP_TIMEOUT" value="${TIMEOUT}"/>
+		<!-- Name of the folder where files are located -->
+		<property name="PROP_SOURCEFOLDER" value="${SRCFOLDER}"/>
+		<!-- Name of the destination file -->
+		<property name="PROP_DESTINATIONFILE" value="${DESTINATIONFILE}"/>
+		<!-- Name of the source agent -->
+		<property name="PROP_SOURCE_AGENT" value="${SRC}"/>
+		<!-- Name of the destination agent -->
+		<property name="PROP_DEST_AGENT" value="${DEST}"/>
+		<!-- Name of the command queue manager -->
+		<property name="PROP_COMMAND_QM" value="${CMDQM}"/>
+	</target>
+
+
+	<!-- Step 2 of the solution - Message to File transfer.
+    First transfer all files as messages to a queue. The queue must be defined
+	already with required permissions set -->
+	<target name="filetomessage" depends="init" >
+		<fte:filecopy cmdqm="${PROP_COMMAND_QM}" src="${PROP_SOURCE_AGENT}" dst="${PROP_DEST_AGENT}" 
+		              outcome="defer" idproperty="copy.id">
+		    <!-- Transfer fils in source folder to a queue defined at destination 
+			agent queue manager. This script uses "MFT.MANY.TO.ONE.Q" -->
+			<fte:filespec srcfilespec="${PROP_SOURCEFOLDER}" 
+						  dstqueue="MFT.MANY.TO.ONE.Q@MFTDEMO" 
+			              dstmsgsize="1024K"/>
+		</fte:filecopy>
+		
+		<!-- Wait for transfer to complete and copy the result into a property -->
+		<fte:awaitoutcome id="${copy.id}" rcproperty="stage.one.result" timeout="${TIMEOUT}"/>
+
+		<!-- Set propery stage.one.complete only if the first transfer succeeds -->
+		<condition property="stage.one.complete">
+			<equals arg1="${stage.one.result}" arg2="0"/>
+		</condition>		
+	</target>
+	
+	<!-- Step 3 of the solution - Message to File transfer -->
+	<target name="messagetofile" depends="filetomessage" if="stage.one.complete">
+		<!-- Transfer all messages in queue as one file -->
+		<fte:filemove cmdqm="${PROP_COMMAND_QM}" src="${PROP_DEST_AGENT}" dst="${PROP_DEST_AGENT}" 
+		              rcproperty="stage.two.result">
+			<!-- Overwrite destination file if it exists -->
+			<fte:filespec srcqueue="MFT.MANY.TO.ONE.Q@MFTDEMO" dstfile="${DESTINATIONFILE}" 
+			              overwrite="true"/>
+		</fte:filemove> 
+	</target>
+	
+	<!-- Step 1 of the solution - clean the queue by running clearq runmqsc command -->
+	<target name="cleanup">
+		<echo message="Cleaning up queues for initiating transfers."/>
+		<fte:call cmdqm="${PROP_COMMAND_QM}" agent="${PROP_DEST_AGENT}" rcproperty="stage.cleanup" idproperty="copy.xfer.id">
+			<fte:command command="cleanq.bat" successrc="0" retrycount="1" retrywait="30">
+				<fte:arg value="MFTDEMO"/>
+				<fte:arg value="MFT.MANY.TO.ONE.Q"/>
+			</fte:command>
+		</fte:call>				
+	</target>	
+</project>

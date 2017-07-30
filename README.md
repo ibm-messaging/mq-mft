@@ -58,8 +58,12 @@ More details in source file:
 
 https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/UpdateFileSpec.java
 
+## 6. Many to one file transfer using Ant script
+There can be scenario wherein many files present at source end need to be transferred as one single file at destination. Basically after the first file is transferred, content of rest of the files is appended to the first file. In IBM MQ Managed File Transfer, files are transferred individually i.e. if there are three files in source end, then all three files are transferred separately and there will be three files at destination end. Appending file content to an existing file is not possible. However it's possible to use a combination of two transfers to do this job.
+
+More here: 
 
 
-##Other IBM MQ MFT Exits:
+## Other IBM MQ MFT Exits:
 File Ordering by Steve Parsons: https://github.com/ibm-messaging/mq-mft-file-ordering
 
