@@ -11,6 +11,7 @@ To achive "Many to one file" transfer, this solution first runs a "File to Messa
 	define ql(MFT.MANY.TO.ONE.Q)
    
 2) Set access authority to queue for the user under which destination agent runs. This sample assumes the destination agent runs under use "samantha"
+
 		setmqaut -m MFTDEMO -n "MFT.MANY.TO.ONE.Q" -t q -p "samantha" -remove
 		setmqaut -m MFTDEMO -n "MFT.MANY.TO.ONE.Q" -t q -p "samantha" +browse +get +put
 
@@ -19,10 +20,12 @@ To achive "Many to one file" transfer, this solution first runs a "File to Messa
 4) Add the following properties to destination agent properties file. 
 
 	On Windows
+	
 	  commandPath=C:\\MFTCommands 
 	  enableQueueInputOutput=true
 	  
 	On Unix/Linux
+	
 	  commandPath=/usr/mftcmds 
 	  enableQueueInputOutput=true
 5) Stop and Start the agent for the changes to get applied.
