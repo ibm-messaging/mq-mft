@@ -6,19 +6,19 @@ This sample demonstrates how to transfer many files present at source end as one
 To achive "Many to one file" transfer, this solution first runs a "File to Message" transfer followed by "Message to File" transfer. In the first step all files at source are transferred as messages to a queue. In the second step messagesfrom that queue are transferred as one file.
 
 ## Required Configuration
-0) Create source and destination agents. This sample assumes there are two agents, "SRC" and "DEST" already configured
+0) Create source and destination agents. This sample assumes there are two agents, `SRC` and `DEST` already configured
 
-1) The script requires a queue "MFT.MANY.TO.ONE.Q" to be defined in destination agent's queue manager.
+1) The script requires a queue `MFT.MANY.TO.ONE.Q` to be defined in destination agent's queue manager.
    Use runmqsc to create the queue: 
    
 	`define ql(MFT.MANY.TO.ONE.Q)`
    
-2) Set access authority to queue for the user under which destination agent runs. This sample assumes the destination agent runs under use "samantha"
+2) Set access authority to queue for the user under which destination agent runs. This sample assumes the destination agent runs under use `samantha`
 
 		setmqaut -m MFTDEMO -n "MFT.MANY.TO.ONE.Q" -t q -p "samantha" -remove
 		setmqaut -m MFTDEMO -n "MFT.MANY.TO.ONE.Q" -t q -p "samantha" +browse +get +put
 
-3) Copy the cleanq.bat or cleanq.sh file to a directory on the file system. On Windows copy the cleanq.bat file to say, "C:\MFTCommands" directory. For Unix/Linux platforms, copy the cleanq.sh to a directory say "/usr/mftcmds".
+3) Copy the `cleanq.bat` or `cleanq.sh` file to a directory on the file system. On Windows copy the `cleanq.bat` file to say, `C:\MFTCommands` directory. For Unix/Linux platforms, copy the `cleanq.sh` to a directory say `/usr/mftcmds`.
 
 4) Add the following properties to destination agent properties file. 
 
@@ -36,7 +36,7 @@ To achive "Many to one file" transfer, this solution first runs a "File to Messa
 
 5) Stop and Start the agent for the changes to get applied.
 
-6) Copy the manyfiletoonefile.xml file to any folder on file system, say C:\MFTCommands on Windows
+6) Copy the manyfiletoonefile.xml file to any folder on file system, say `C:\MFTCommands` on Windows
 
 ## Run the script to initiate transfer. Here is an example:
 
