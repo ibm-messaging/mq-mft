@@ -45,23 +45,28 @@ After compiling, it would be useful to jar the class files, for example mft.secu
    For decryption, exit requires a passphrase also. The passphrase, in plain text, must be provided via file called "cryptdecrypt.pwd" located in logged in user's home directory. This is to ensure passphrase is secured to some extent.
    
    Sample contents of cryptdecrypt.pwd file:
+   ```
    passphrase=passw0rd
-   
+   ```
 3) After exit is compiled and jared, copy the mft.secure.jar to exit directory of both source and destination agents.
 4) Copy decenc.properties file containing required configuration properties to exit directory of source and destination agents.
 5) Generate Private and Public Keys. They can be generated from igolder website - https://www.igolder.com/PGP/generate-key/. Follow the instructions on the website and place the public and private key files in suitable directories. Update the decenc.properties file with correct path to these key files.
 6) Add the following properties to agent.properties file of source and destination agent as below:
    Source agent:
+   ```
    sourceTransferStartExitClasses=mft.secure.EncryptAtSource
    exitClassPath=/bcpgp/bcpg-jdk15on-157.jar;/bcpgp/bcpkix-jdk15on-157.jar;/bcpgp/bcprov-ext-jdk15on-157.jar;/bcpgp/bcprov-jdk15on-157.jar;/bcpgp/bctls-jdk15on-157.jar
-   
+   ```
    Destination agent:
+   ```
    destinationTransferEndExitClasses=mft.secure.DecryptAtDestination
    exitClassPath=/bcpgp/bcpg-jdk15on-157.jar;/bcpgp/bcpkix-jdk15on-157.jar;/bcpgp/bcprov-ext-jdk15on-157.jar;/bcpgp/bcprov-jdk15on-157.jar;/bcpgp/bctls-jdk15on-157.jar
-
-   Note: Change path BouncyCastle jars appropriately.
+   ```
+   
+   Note: The above assumes that BouncyCastle jars are installed in /bcpg directory. You much change path BouncyCastle jars appropriately.
 
 7) Start source and destination agents.
 8) Run transfer. 
+   ```
    Example: fteCreateTransfer -rt -1 -sa SRC -sm SRCQM -da DEST -dm DESTQM -sd delete -de overwrite -dd "/dest/files/" "/src/files"
-
+   ```
