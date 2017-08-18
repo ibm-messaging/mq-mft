@@ -31,29 +31,25 @@ After compiling, it would be useful to jar the class files, for example mft.secu
 1) Create source and destination agents. 
 2) The exit uses a configuration file, decenc.properties, for enabling/disabling decryption/encryption. The file must be located along side the mft.secure.jar under agent's exit directory.
    The contents of decenc.properties for source agent:
-   
+   ```
    encryptAtSource=true <- Enable encryption of files at source agent. If false, no encryption will be done
-   
    enableDebugLog=true  <- Write trace log. If false, no logs are written except for any exceptions
-   
    publicKeyFile=<location of public key file> for example /PGPKeys/publickey.txt
-
+   ```
    The contents of decenc.properties for destination agent
-   
+   ```
    decryptAtDestination=true <- Enable decryption of files at destination agent. If false, no decryption will be done
-   
    enableDebugLog=true       <- Write trace log. If false, no logs are written except for any exceptions.
-   
    privateKeyFile=<location of private key file> for example /PGPKeys/privatekey.txt
-   
+   ```
    For decryption, exit requires a passphrase also. The passphrase, in plain text, must be provided via file called "cryptdecrypt.pwd" located in logged in user's home directory. This is to ensure passphrase is secured to some extent.
    
    Sample contents of cryptdecrypt.pwd file:
    passphrase=passw0rd
    
-3) After exit is compile and jared, copy the mft.secure.jar to exit directory of both source and destination agents.
+3) After exit is compiled and jared, copy the mft.secure.jar to exit directory of both source and destination agents.
 4) Copy decenc.properties file containing required configuration properties to exit directory of source and destination agents.
-5) Generate Private and Public Keys. They can be generated from igolder website @https://www.igolder.com/PGP/generate-key/. Follow the instructions on the website and place the public and private key files in suitable directories. Update the decenc.properties file with correct path to these key files.
+5) Generate Private and Public Keys. They can be generated from igolder website - https://www.igolder.com/PGP/generate-key/. Follow the instructions on the website and place the public and private key files in suitable directories. Update the decenc.properties file with correct path to these key files.
 6) Add the following properties to agent.properties file of source and destination agent as below:
    Source agent:
    sourceTransferStartExitClasses=mft.secure.EncryptAtSource
