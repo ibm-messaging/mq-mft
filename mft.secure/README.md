@@ -12,7 +12,7 @@ The following environment was used to build exit:
 
 JDK: v1.8
 
-MFT: com.ibm.wmqfte.exitroutines.api.jar (v9.0. Earlier version of the API can also be used)
+MFT: v9.0. Import com.ibm.wmqfte.exitroutines.api.jar. Earlier versions of MFT can also be used.
 
 BouncyCastle: bcpg-jdk15on-157.jar,bcpg-jdk15on-157.jar, bcpkix-jdk15on-157.jar, bcprov-ext-jdk15on-157.jar, bcprov-jdk15on-157.jar, bctls-jdk15on-157.jar. Download these from BouncyCastle website.
 
