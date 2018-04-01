@@ -1,0 +1,20 @@
+<?xml version ="1.0" encoding="UTF-8"?>
+<project name="ArchiveFiles" default="ArchiveAtSource">
+	<!-- Initialise variables -->
+	<target name="init">
+		<!-- Source folder from where files will be picked up -->  
+		<property name="src.dir" value="${SRCFLDR}"/>
+		<!-- Archive file with path -->  
+		<property name="archive.path" value="${ARCHPATH}" />		
+	</target>
+	
+	<!-- Archive the files at source agent -->
+	<target name="ArchiveAtSource" depends="init">
+		<!-- Use the Zip task to archive the files -->
+		<zip destfile="${archive.path}">
+			<zipfileset dir="${src.dir}">
+				<include name="**/*" />
+			</zipfileset>
+		</zip>
+	</target>	  
+</project>
