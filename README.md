@@ -40,13 +40,13 @@ Archiving files at source or destination endpoint after files are transferred is
 
 While usage of custom Java exit has been discussed in #3 above, here we discuss about using an Ant script to archive files at source endpoint after a transfer completes. 
 
-The Ant script here uses the Zip task to archive files at source folder. The script is simple and self explanatory. It requires two parameters to passed, name of the source folder and absolute path of archive file.
+The Ant script here (https://github.com/ibm-messaging/mq-mft/blob/master/mft.ant/arch.xml) uses the Zip task to archive files at source folder. The script is simple and self explanatory. It requires two parameters to passed, name of the source folder `SRCFLDR` from where files will be picked up for archiving and absolute path of target archive file, `ARCHPATH`.
 
 Follow the steps below to make use of the script.
 1) Create a folder of your choice, say '/usr/mft/scripts' and copy the script into that folder.
 
 2) Update the agent.properties file of the source MFT agent and the following:
-   commandPath=/usr/mft/scripts
+   `commandPath=/usr/mft/scripts`
    
    Agent uses tThe commandPath property to locate the scripts and run them as part of transfer.
 
@@ -54,7 +54,7 @@ Follow the steps below to make use of the script.
 
 4) Initiate a transfer using fteCreateTransfer command, for example
 
-fteCreateTransfer -rt -1 -sa SRCAGNT -sm SRCQM -da DSTAGNT -dm DSTQM -postsrc "antscript:arch.xml(ARCHPATH=/usr/mft/arhive1.zip,SRCFLDR=/usr/srcfldr),,,0" -r -de overwrite -dd "/usr/dest" "/usr/srcfldr"
+`fteCreateTransfer -rt -1 -sa SRCAGNT -sm SRCQM -da DSTAGNT -dm DSTQM -postsrc "antscript:arch.xml(ARCHPATH=/usr/mft/arhive1.zip,SRCFLDR=/usr/srcfldr),,,0" -r -de overwrite -dd "/usr/dest" "/usr/srcfldr"`
 
 
 ## 5. Rename destination file based on MQMD attribute.
