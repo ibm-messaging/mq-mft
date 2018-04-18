@@ -85,6 +85,16 @@ https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/
 ## 7. Many to one file transfer using Ant script
 There can be scenario wherein many files present at source end need to be transferred as one single file at destination. Basically after the first file is transferred, content of rest of the files is appended to the first file. In IBM MQ Managed File Transfer, files are transferred individually i.e. if there are three files in source end, then all three files are transferred separately and there will be three files at destination end. Appending file content to an existing file is not possible. However it's possible to use a combination of two transfers to do this job.
 
+## 8. Move files from source folder at the end of a transfer.
+I was working recently with a customer who had the following requirement in their file transfer solution:
+At source agent 
+1) move files from source to directory to a directory which they called ARCHIVE directory if transfer succeeds.
+2) move files from source to directory to a directory which they called REJECT directory if transfer fails.
+
+This requirement can be easily met by implementing a class of SourceTransferEndExit interface as described in the sample here.
+https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/MoveFiles.java
+
+
 More here: https://github.com/ibm-messaging/mq-mft/tree/master/many.to.one.transfer
 
 ## Other IBM MQ MFT Exits:
