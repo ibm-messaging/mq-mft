@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Program Files/IBM/MQ/mqft/lib/com.ibm.wmqfte.exitroutines.api.jar"/>
+	<classpathentry kind="lib" path="C:/Project/MQ_and_MFT/MFTAzureBlob/AzureSotrageAPI/azure-storage-5.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Project/MQ_and_MFT/MFTAzureBlob/AzureSotrageAPI/jackson-core-2.9.4.jar"/>
+	<classpathentry kind="lib" path="C:/Project/MQ_and_MFT/MFTAzureBlob/AzureSotrageAPI/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
