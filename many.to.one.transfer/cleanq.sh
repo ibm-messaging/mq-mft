@@ -16,4 +16,4 @@ fi
  
 echo "clear qlocal($2)" | runmqsc $1
  
-exit
+exit $?
