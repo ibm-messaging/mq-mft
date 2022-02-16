@@ -16,4 +16,6 @@ rem Print help on how to use the script
 :showhelp
 echo Usage:
 echo    cleanq.bat QMgrName QueueName
+exit /b -1
 :theend
+exit /b %errorlevel%
