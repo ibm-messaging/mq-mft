@@ -96,7 +96,9 @@ At source agent
 This requirement can be easily met by implementing a class of SourceTransferEndExit interface as described in the sample here.
 https://github.com/ibm-messaging/mq-mft/blob/master/mft.samples/src/mft/samples/MoveFiles.java
 
-
+## 9. Append file
+This package contains two exits that helps in appending data to an existing file instead of the standard MFT behavior of either throwing an error if file exists or overwriting if -de option in fteCreateTransfer is set to overwrite.
+See the explanation in the code for usage details.
 
 
 ## Other IBM MQ MFT Exits:
