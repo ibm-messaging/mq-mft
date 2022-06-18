@@ -1,0 +1,12 @@
+{
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "c:\\Program Files\\IBM\\MQ\\java\\lib\\com.ibm.mq.allclient.jar",
+            "c:\\Program Files\\IBM\\MQ\\mqft\\lib\\com.ibm.wmqfte.exitroutines.api.jar"
+        ],
+        "exclude": [
+            "c:\\Program Files\\IBM\\MQ\\mqft\\lib.ori\\com.ibm.wmqfte.exitroutines.api.jar"
+        ]
+    }
+}

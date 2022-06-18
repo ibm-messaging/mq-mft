@@ -78,9 +78,17 @@ public class FileFilterExit implements SourceTransferStartExit {
 			Map<String, String> environmentMetaData, Map<String, String> transferMetaData,
 			List<SourceFileExitFileSpecification> fileSpecs) {
 		System.out.println("onSourceTransferStart - Entry");
-		
+	
 		// Always proceed with transfer no matter what happens in the exit.
 		TransferExitResult result = TransferExitResult.PROCEED_RESULT;
+		
+		// Use transfer meta data to determine if we need to filter files.
+		// Return from if required meta data does not exist.
+		String filterFiles = transferMetaData.get("FILTER_FILES");
+		if( !filterFiles.equals("YES")) {
+			// Return if 
+			return result;
+		}
 		
 		// List of files whose size is above give limit
 		ArrayList <SourceFileExitFileSpecification> filesToExclude = new ArrayList<SourceFileExitFileSpecification>();
