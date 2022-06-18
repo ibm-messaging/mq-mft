@@ -85,7 +85,7 @@ public class FileFilterExit implements SourceTransferStartExit {
 		// Use transfer meta data to determine if we need to filter files.
 		// Return from if required meta data does not exist.
 		String filterFiles = transferMetaData.get("FILTER");
-		if( filterFiles != null && !filterFiles.equals("YES")) {
+		if( filterFiles == null || !filterFiles.equalsIgnoreCase("YES")) {
 			// Return if 
 			return result;
 		}
