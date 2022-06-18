@@ -1,6 +1,6 @@
 package mft.samples;
 /**
- * Copyright (c) IBM Corporation 2016
+ * Copyright (c) IBM Corporation 2016,2022
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -84,8 +84,8 @@ public class FileFilterExit implements SourceTransferStartExit {
 		
 		// Use transfer meta data to determine if we need to filter files.
 		// Return from if required meta data does not exist.
-		String filterFiles = transferMetaData.get("FILTER_FILES");
-		if( !filterFiles.equals("YES")) {
+		String filterFiles = transferMetaData.get("FILTER");
+		if( filterFiles != null && !filterFiles.equals("YES")) {
 			// Return if 
 			return result;
 		}
