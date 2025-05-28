@@ -1,0 +1,22 @@
+{
+    "HOST": "HOSTNAME",
+    "PORT": "PORT_NUMBER",
+    "NAME": "TESTMONITOR",
+    "TYPE": "directory or queue",
+    "POLL_INTERVAL": 1,
+    "POLL_INTERVAL_UNIT": "minutes",
+    "RESOURCE_NAME": "path/to/resource",
+    "RECURSION_LEVEL": 1,
+    "SOURCE_AGENT": "SourceAgent1",
+    "SOURCE_AGENT_QMGR": "SourceAgent1QM",
+    "DESTINATION_AGENT": "DestinationAgent1",
+    "DESTINATION_AGENT_QMGR": "DestinationAgent1QM",
+    "SOURCE": "/path/to/source",
+    "SOURCE_TYPE": "file",
+    "DESTINATION": "/path/to/destination",
+    "DESTINATION_TYPE": "directory",
+    "MODE": "binary",
+    "INCLUDE_PATTERN": "",
+    "EXCLUDE_PATTERN": "",
+    "TRIGGER_TYPE": ""
+}
