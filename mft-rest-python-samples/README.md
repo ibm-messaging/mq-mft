@@ -31,7 +31,7 @@ cd python_samples
 
 2. Clone this repository:
 
-`git clone https://github.com/ibm-messaging/MFT_samples.git `
+`git clone https://github.com/ibm-messaging/mft-rest-python-samples.git `
 
 **Repository Structure**
 
