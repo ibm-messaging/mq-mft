@@ -1,6 +1,17 @@
 # **IBM MQ MFT Operations Using Python Scripts**
 
-This project contains a set of Python scripts designed to interact with IBM MQ Managed File Transfer (MFT) via the REST API.These scripts all the user to initiate transfers, filter and summarise the transfers. Additionally they can also use it to create resource monitors and list and filter them out.
+Starting with IBM MQ version 9.1, administrators can manage IBM MQ Managed File Transfer (MFT) not only through traditional tools like command-line interfaces, MQ Explorer, and JCL (on z/OS), but also via a set of REST APIs. This RESTful interface offers a lightweight, installation-free way to interact with MFT, making it accessible from any programming or scripting language that supports HTTP operations.
+
+**Project Overview**
+
+
+This project provides a collection of Python sample scripts to administer IBM MQ Managed File Transfer (MFT) using REST APIs. The scripts demonstrate how to perform key MFT operations programmatically, including:
+
+1. Initiating file transfers between agents
+2. Monitoring the status of all or specific transfers
+3. Summarizing transfer outcomes(eg. successful,pending,failed)
+4. Creating Resource Monitors
+5. Displaying the status and detailed information about one or more resource monitors
 
 **Getting Started**
 
@@ -11,9 +22,9 @@ This project contains a set of Python scripts designed to interact with IBM MQ M
 
 **Prerequisites:**
 
-You need Python 3.6 or higher installed on your system.
+1. You need Python 3.6 or higher installed on your system.
 
-Before using these scripts, ensure that IBM MQ Managed File Transfer (MFT) is properly configured. Follow the official IBM documentation for setup instructions: [Configuring MFT for first use](https://www.ibm.com/docs/en/ibm-mq/9.4.x?topic=transfer-configuring-mft-first-use)
+2. Before using these scripts, ensure that IBM MQ Managed File Transfer (MFT) is properly configured. Follow the official IBM documentation for setup instructions: [Configuring MFT for first use](https://www.ibm.com/docs/en/ibm-mq/9.4.x?topic=transfer-configuring-mft-first-use)
 
 For additional guidance on configuring Managed File Transfer (MFT) between two machines, refer to this resource: [IBM Managed File Transfer Configuration Guide](https://community.ibm.com/community/user/viewdocument/ibm-managed-file-transfer-configura?CommunityKey=183ec850-4947-49c8-9a2e-8e7c7fc46c64&tab=librarydocuments&hlmlt=BL).
 
