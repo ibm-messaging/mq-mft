@@ -1,6 +1,9 @@
 # **IBM MQ MFT Operations Using Python Scripts**
 
 Starting with IBM MQ version 9.1, administrators can manage IBM MQ Managed File Transfer (MFT) not only through traditional tools like command-line interfaces, MQ Explorer, and JCL (on z/OS), but also via a set of REST APIs. This RESTful interface offers a lightweight, installation-free way to interact with MFT, making it accessible from any programming or scripting language that supports HTTP operations.
+The MFT REST API allows the user to :
+1. Initiate and monitor file transfers
+2. Create and query resource monitors to track file system changes
 
 **Project Overview**
 
