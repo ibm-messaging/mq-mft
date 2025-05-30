@@ -4,7 +4,7 @@ Starting with IBM MQ version 9.1, administrators can manage IBM MQ Managed File 
 The MFT REST API allows the user to :
 1. Initiate and monitor file transfers
 2. Create and query resource monitors to track file system changes
-
+ 
 **Project Overview**
 
 
