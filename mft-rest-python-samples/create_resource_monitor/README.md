@@ -1,6 +1,6 @@
 # **MFT Resource Monitor Creator Script**
 
-This Python script simplifies the creation of IBM MQ Managed File Transfer (MFT) monitor resources via the MFT REST API. It allows you to define the resource monitors, configure polling and trigger conditions, and set up a complete transfer workflow.
+This Python script simplifies the creation of IBM MQ Managed File Transfer (MFT) resource monitors via the MFT REST API. It allows you to define the resource monitors, configure polling and trigger conditions, and set up a complete transfer workflow.
 
 This script uses a create_resource_monitor.json file to store configuration parameters required for creating a resource monitor. The json file allows users to easily edit and customize the parameters without modifying the script.
 
