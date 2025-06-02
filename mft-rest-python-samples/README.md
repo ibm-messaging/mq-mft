@@ -58,7 +58,7 @@ This repository contains the following directories, each serving a specific purp
 5. `create_resource_monitor`: Script to create an MFT resource monitor.
 6. `list_resource_monitors`: Script to list and filter information about all resource monitors.
 
-This PR introduces a collection of Python scripts designed to interact with IBM MQ Managed File Transfer (MFT) using the REST API. The scripts provide functionality to:
+This directory introduces a collection of Python scripts designed to interact with IBM MQ Managed File Transfer (MFT) using the REST API. The scripts provide functionality to:
 
 Initiate file transfers between agents
 Filter and summarize transfer information
