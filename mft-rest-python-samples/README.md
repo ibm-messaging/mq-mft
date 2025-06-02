@@ -60,6 +60,6 @@ This repository contains the following directories, each serving a specific purp
 
 This directory introduces a collection of Python scripts designed to interact with IBM MQ Managed File Transfer (MFT) using the REST API. The scripts provide functionality to:
 
-Initiate file transfers between agents
-Filter and summarize transfer information
-Create and manage resource monitors
+1. Initiate file transfers between agents
+2. Filter and summarize transfer information
+3. Create and manage resource monitors
