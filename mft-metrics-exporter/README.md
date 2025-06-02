@@ -1,0 +1,114 @@
+# MQ-MFT conversion of XML message to Json and Visualization through Prometheus
+
+The Java application consumes the messages published by MFT into SYSTEM.FTE topic in xml format and then converts it into Json format. The messages include agent status messages, monitor list messages, transfer log messages, transfer status messages, these messages gives information on the status of message transfer, status of monitor, status of the agent.
+
+The json format message is pushed to Prometheus using pushgateway for monitoring and visualization. The Pushgateway temporarily holds the json format messages and lets the prometheus server scrape the data from the https pushgateway source, Grafana uses the data from the prometheus to display the dashboard.
+ 
+Prometheus is a monitoring system that collects and stores the time-series data which can be integrated with grafana for visualization.
+
+## Prerequisites
+
+1. Install IBM MQ and MFT.
+ - Use the documentation to set up MFT "https://www.ibm.com/docs/en/ibm-mq/9.4.x?topic=transfer-configuring-mft-first-use"
+2. Install latest version of Java and JDK.
+3. Create a queue manager.
+4. Set coordination queue manager.
+5. Create a MFT agent.
+ - Use the documentation for setting up queue manager, coordination queue manager and MFT agent : "https://www.ibm.com/docs/en/ibm-mq/9.2.x?topic=configuring-managed-file-transfer"
+6. Create a SVRCONN channel as given in the documentation.
+7. Create a local queue on the queue manager.
+8. Install latest version of Prometheus from "https://prometheus.io/download/".
+9. Install latest version of Prometheus Pushgateway "https://prometheus.io/download/".
+10. Download the following jar file and add it into lib folder.
+    - jackson-annotations-2.14.0.jar : "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.14.0/"
+    - jackson-core-2.15.2.jar : "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.15.2/"
+    - jackson-databind-2.11.1.jar : "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.11.1/"
+    - json-20250107.jar : "https://repo1.maven.org/maven2/org/json/json/20250107/"
+    - prometheus-metrics-core-1.3.0.jar : "https://repo1.maven.org/maven2/io/prometheus/prometheus-metrics-core/1.3.0/"
+    - prometheus-metrics-exporter-pushgateway-1.3.0.jar : "https://repo1.maven.org/maven2/io/prometheus/prometheus-metrics-exporter-pushgateway/1.3.0/"
+    - simpleclient_common-0.16.0.jar : "https://repo1.maven.org/maven2/io/prometheus/simpleclient_common/0.16.0/"
+    - simpleclient_httpserver-0.16.0.jar : "https://repo.maven.apache.org/maven2/io/prometheus/simpleclient_httpserver/0.16.0/"
+    - simpleclient_pushgateway-0.16.0.jar : "https://repo1.maven.org/maven2/io/prometheus/simpleclient_pushgateway/0.16.0/"
+    - simpleclient-0.16.0.jar : "https://repo1.maven.org/maven2/io/prometheus/simpleclient/0.16.0/"
+11. Check if MQ allclient jar exists else download from : "https://central.sonatype.com/search?q=a:com.ibm.mq.allclient&smo=true"
+12. Install latest version of Grafana using the link : "https://grafana.com/grafana/download"
+
+
+## Repository Structure
+
+This repository contains the following directories, each serving a specific purpose:
+
+1. json_data_models_dashboards : Users can define and load dashboards into Grafana, enabling consistent and reproducible visualization of data.
+2. xml-metrics-exporter : Contains two java application the first application consumes the messages from SYSTEM.FTE.TOPIC and converts to json format while the second application would export the data into prometheus
+
+
+## Getting started
+
+1. Clone the repository into the local machine using the link : "https://github.ibm.com/B-C-Surag/mft-metrics-exporter.git".
+2. Check if the Queue  manager is running and the agent is ready.
+3. Start the Prometheus server, This lauches prometheus to start collecting metrics.
+4. Start the PushGateway server, This makes the pushgateway available to temprovoraly store the metrics until Prometheus scrapes it.
+5. Compile the XMLToJson.java file.
+6. Run the XMLToJson file, This would convert the xml messages into json format and sends it into Prometheus for monitoring and creating Dashboard.
+
+## Compiling and running the file
+
+1. Navigate to the Prometheus folder and run the following command in the terminal to start the Prometheus Server.
+    ```
+    prometheus
+    ```
+
+2. Navigate to the Pushgateway folder and run the following command in the terminal to start the Pushgateway.
+    ```
+    pushgateway
+    ```
+
+3. In any Browser run localhost:3000 to start grafana.
+
+4. Use the below command to compile the file.
+
+    for windows
+    ``` 
+    javac -cp ".;C:\Program Files\IBM\MQ\java\lib\com.ibm.mq.allclient.jar" XMLToJson.java
+    ```
+
+    for linux
+    ```
+    javac -cp ".:/opt/mqm/java/lib/com.ibm.mq.allclient.jar" XMLToJson.java
+    ```
+
+5. Use the below command to run the file (Replace the command with names of the queue manager name, destination name, host name, port name, channel name, user name, password and time out in seconds(optional)).
+
+    for windows
+    ``` 
+    java -cp .;"C:\Program Files\IBM\MQ\java\lib\com.ibm.mq.allclient.jar" XMLToJson -m <queueManagerName> -d <destinationName> -h <host> -p <port> -l <channel> -u <user> -w <passWord> -t <timeout_seconds> 
+    ```
+
+    for linux
+    ```
+    java -cp ".:/opt/mqm/java/lib/com.ibm.mq.allclient.jar" XMLToJson -m <queueManagerName> -d <destinationName> -h <host> -p <port> -l <channel> -u <user> -w <passWord> -t <timeout_seconds>
+    ```
+
+6. If the timeout is not provided as a parameter then the application runs infinitely.
+
+## Viewing Dashboards in Grafana
+
+1. Copy the Json data models in the repository.
+2. Navigate into create dashboard in localhost:3000.
+3. Click on create Dashboards -> new dashboard.
+4. Add data source as Prometheus.
+5. Navigate to the settings in the top right corner.
+6. Paste the json data model files to view the dashboard.
+7. Repeat the steps to view the required dashboards.
+
+## Purpose
+1. XML format has a complex tag structure that makes it difficult to fetch the required data for analysis and monitoring, while the json format has a simple key-value structure that makes it easy to fetch the specific data for analysis.
+2. The Json message is then pushed into Prometheus using Pushgateway and Dashboard is created that shows the details of the fle transfer.
+
+## Sampe dashboard
+
+1. Pie chart representing the number of file transfer that were successful or failed.
+ - ![Pie chart](images/pieChart.png)
+
+2. Guage representing the number of success and failure.
+ - ![Guage](images/guage.png)
