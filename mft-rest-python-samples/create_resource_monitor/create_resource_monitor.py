@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-'''This script creates a monitor resource for IBM MQ Managed File Transfer (MFT) using the REST API.'''
+'''This script creates a resource monitor for IBM MQ Managed File Transfer (MFT) using the REST API.'''
 
 import subprocess
 import json
@@ -26,7 +26,7 @@ load_dotenv()
 def display_monitor(hostname,port,name):
 
     """
-    Retrieves and displays IBM MQ MFT monitor resources from the REST API, optionally filtering by monitor name.
+    Retrieves and displays IBM MQ MFT resource monitor from the REST API, optionally filtering by monitor name.
 
     Args:
         hostname (str): The hostname of the IBM MQ REST API server.
@@ -67,12 +67,12 @@ def create_monitor(hostname, port,
                    mode, include_pattern, exclude_pattern, trigger_type,
                    no_file_size_change_poll_count=None, file_size=None, file_size_unit=None, match_pattern=None):
     """
-    Creates an IBM MQ MFT monitor resource with a transfer definition using the provided parameters.
+    Creates an IBM MQ MFT resource monitor with a transfer definition using the provided parameters.
 
     Args:
         hostname : Hostname of the IBM MQ REST API server.
         port : Port number of the IBM MQ REST API server.
-        name : Unique name for the monitor resource.
+        name : Unique name for the resource monitor.
         resource_type : Type of resource to monitor (e.g., 'directory' or 'queue').
         poll_interval : Frequency at which the monitor polls the resource.
         poll_interval_unit : Time unit for the poll interval (e.g., 'seconds', 'minutes').
@@ -97,7 +97,7 @@ def create_monitor(hostname, port,
         match_pattern : Pattern to match for the trigger condition.
 
     Returns:
-        Prints the details of the monitor created to the console.
+        Prints the details of the resource monitor created to the console.
     """
 
     url = f"https://{hostname}:{port}/ibmmq/rest/v3/admin/mft/monitor/"
