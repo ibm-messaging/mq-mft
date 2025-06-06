@@ -23,38 +23,26 @@ import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Gauge;
 import io.prometheus.client.exporter.PushGateway;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
 import java.util.*;
+
+// Push the data into Prometheus
 public class JsonToPrometheus {
     private static final Map<String, Gauge> gaugeMap = new HashMap<>();
-    public static void main(String[] args) throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder inputBuilder = new StringBuilder();
-        String line;
 
-        while((line = reader.readLine()) != null){
-            inputBuilder.append(line).append("\n");
-        }
-
-        String content = inputBuilder.toString();
-
+    public static void exportJson(String jsonContent) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature());
-        // Step 1: Fix ][ between array blocks
-        content = content.replaceAll("]\\s*\\[", ",");
-        // Step 2: Wrap with [ ] if not already
-        if (!content.trim().startsWith("[")) content = "[" + content;
-        if (!content.trim().endsWith("]")) content = content + "]";
-        // Step 3: Escape all backslashes
-        content = content.replace("\\", "\\\\");
-        // Step 4: Remove all trailing commas before } or ]
-        content = content.replaceAll(",\\s*}", "}")
-                         .replaceAll(",\\s*]", "]");
-        // Step 5: Parse
-        JsonNode root = mapper.readTree(content);
+
+        // // Parse and clean input JSON string into a valid JSON array format
+        jsonContent = jsonContent.replaceAll("]\\s*\\[", ",");
+        if (!jsonContent.trim().startsWith("[")) jsonContent = "[" + jsonContent;
+        if (!jsonContent.trim().endsWith("]")) jsonContent = jsonContent + "]";
+        jsonContent = jsonContent.replace("\\", "\\\\");
+        jsonContent = jsonContent.replaceAll(",\\s*}", "}")
+                                 .replaceAll(",\\s*]", "]");
+
+        // Read the cleaned JSON content into a JsonNode tree
+        JsonNode root = mapper.readTree(jsonContent);
         int counter = 0;
         for (JsonNode entry : root) {
             if (!entry.isObject()) continue;
@@ -69,11 +57,20 @@ public class JsonToPrometheus {
                     PushGateway pg = new PushGateway("localhost:9091");
                     Map<String, String> groupingKey = Map.of("instance", UUID.randomUUID().toString());
                     pg.pushAdd(registry, listType, groupingKey);
-                    System.out.println(":heavy_check_mark: Pushed job: " + listType);
+                    System.out.println(" Pushed job: " + listType);
                 }
             }
         }
     }
+
+    /**
+    * Converts a single JSON object into a Prometheus Gauge metric and registers it.
+    *
+    * This method extracts fields from the given JSON node. String fields are treated
+    * as metric labels, and the first numeric field encountered is used as the metric value.
+    * The metric is registered with the provided Prometheus CollectorRegistry and labeled
+    * using the JSON fields.
+    */
     private static void pushAsMetric(String listName, JsonNode node, String instanceId, CollectorRegistry registry) {
         Map<String, String> labelsMap = new LinkedHashMap<>();
         double valueToPush = 1.0;
@@ -96,6 +93,7 @@ public class JsonToPrometheus {
             System.err.println("✘ Failed to push metric for " + listName + ": " + e.getMessage());
         }
     }
+
     private static String sanitizeLabel(String label) {
         return label.replaceAll("[^a-zA-Z0-9_]", "_").toLowerCase();
     }

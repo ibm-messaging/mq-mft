@@ -51,6 +51,7 @@ This repository contains the following directories, each serving a specific purp
 5. Compile the XMLToJson.java file.
 6. Run the XMLToJson file, This would convert the xml messages into json format and sends it into Prometheus for monitoring and creating Dashboard.
 
+
 ## Compiling and running the file
 
 1. Navigate to the Prometheus folder and run the following command in the terminal to start the Prometheus Server.
@@ -69,24 +70,24 @@ This repository contains the following directories, each serving a specific purp
 
     for windows
     ``` 
-    javac -cp ".;C:\Program Files\IBM\MQ\java\lib\com.ibm.mq.allclient.jar" XMLToJson.java
+    javac -cp "lib/*;C:\Program Files\IBM\MQ\java\lib\com.ibm.mq.allclient.jar" xml_metrics_exporter/*.java
     ```
 
     for linux
     ```
-    javac -cp ".:/opt/mqm/java/lib/com.ibm.mq.allclient.jar" XMLToJson.java
+    javac -cp ".:lib/*:/opt/mqm/java/lib/com.ibm.mq.allclient.jar" xml_metrics_exporter/*.java
     ```
 
 5. Use the below command to run the file (Replace the command with names of the queue manager name, destination name, host name, port name, channel name, user name, password and time out in seconds(optional)).
 
     for windows
     ``` 
-    java -cp .;"C:\Program Files\IBM\MQ\java\lib\com.ibm.mq.allclient.jar" XMLToJson -m <queueManagerName> -d <destinationName> -h <host> -p <port> -l <channel> -u <user> -w <passWord> -t <timeout_seconds> 
+    java -cp ".;lib/*;C:\Program Files\IBM\MQ\java\lib\com.ibm.mq.allclient.jar" xml_metrics_exporter.XMLToJson -m <queueManagerName> -d <destinationName> -h <host> -p <port> -l <channel> -u <user> -w <passWord> -t <timeout_seconds> 
     ```
 
     for linux
     ```
-    java -cp ".:/opt/mqm/java/lib/com.ibm.mq.allclient.jar" XMLToJson -m <queueManagerName> -d <destinationName> -h <host> -p <port> -l <channel> -u <user> -w <passWord> -t <timeout_seconds>
+    java -cp ".:lib/*:/opt/mqm/java/lib/com.ibm.mq.allclient.jar" xml_metrics_exporter.XMLToJson -m <queueManagerName> -d <destinationName> -h <host> -p <port> -l <channel> -u <user> -w <passWord> -t <timeout_seconds>
     ```
 
 6. If the timeout is not provided as a parameter then the application runs infinitely.

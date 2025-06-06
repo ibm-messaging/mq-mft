@@ -14,6 +14,8 @@
 * limitations under the License.
 */
 
+package xml_metrics_exporter;
+
 import java.nio.charset.StandardCharsets;
 import java.sql.Wrapper;
 import java.util.ArrayList;
@@ -54,6 +56,9 @@ import java.io.PrintStream;
 import java.io.StringReader;
 import org.xml.sax.InputSource;
 
+import xml_metrics_exporter.JsonToPrometheus;
+
+
 public class XMLToJson{
 
     private static String host = "localhost";
@@ -74,7 +79,7 @@ public class XMLToJson{
     private void consumeMessages(Connection connection) throws Exception {
 		// Variables
 		MessageConsumer consumer = null;
-    Session consumerSession = null;
+        Session consumerSession = null;
 
 		System.out.println("==== Starting IBM MQ JMS Consumer ====");
 		consumerSession = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -99,57 +104,56 @@ public class XMLToJson{
 						byte [] body = new byte[bodyLen];
 						bytesMsg.readBytes(body, bodyLen);
 						String bodyStr = new String(body, StandardCharsets.UTF_8);
-            //fetching Name
-            int start_index = bodyStr.indexOf("xsi:noNamespaceSchemaLocation=\"");
-            int end_index = bodyStr.indexOf(".xsd");
-            if(start_index != -1 && end_index != -1){
-            name = bodyStr.substring(start_index + 31, end_index);
-            // System.out.println("XML format message for " + bodyStr.substring(start_index + 31, end_index));
-						// System.out.println("Body:" + bodyStr);
-            System.out.println("Json formant message for " +  bodyStr.substring(start_index + 31, end_index));
-            }
-            else{
-              name = "monitorList";
-              // System.out.println("XML format message for Monitor list");
-						  // System.out.println("Body:" + bodyStr);
-              System.out.println("Json formant message for Monitor list");
-            }
-            String rawJson = convertXmlToJson(bodyStr).trim();
-            // Split multiple JSON blocks correctly
-            String[] jsonObjects = rawJson.split("(?<=\\})\\s*(?=\\{)");
-            StringBuilder arrayOutput = new StringBuilder();
-            arrayOutput.append("[\n");
-            for (String obj : jsonObjects) {
-
-              String cleanedObj = obj
-              .replaceAll("\"(xmlns(:[^\"]*)?)\"\\s*:\\s*\"[^\"]*\",?", "") // removes xmlns:* entries
-              .replaceAll("\"xsi:[^\"]*\"\\s*:\\s*\"[^\"]*\",?", ""); // removes xsi:* entries
-
-                arrayOutput.append("  {\n")
-                          .append("    \"").append(name).append("\": ")
-                          .append(cleanedObj.trim()).append("\n")
-                          .append("  },\n");
-            }
-            // Remove the trailing comma
-            if (arrayOutput.toString().endsWith(",\n")) {
-                arrayOutput.setLength(arrayOutput.length() - 2);
-                arrayOutput.append("\n");
-            }
-            arrayOutput.append("]");
-            String final_output = arrayOutput.toString();
-
-            // FileWriter myWriter = new FileWriter("file.json", true);
-            // myWriter.append(final_output);
-            // myWriter.close();
+                        //fetching Name
+                        int start_index = bodyStr.indexOf("xsi:noNamespaceSchemaLocation=\"");
+                        int end_index = bodyStr.indexOf(".xsd");
+                        if (start_index != -1 && end_index != -1) {
+                          name = bodyStr.substring(start_index + 31, end_index);
+                          // System.out.println("XML format message for " + bodyStr.substring(start_index + 31, end_index));
+            						  // System.out.println("Body:" + bodyStr);
+                          System.out.println("Json formant message for " +  bodyStr.substring(start_index + 31, end_index));
+                        } else {
+                          name = "monitorList";
+                          // System.out.println("XML format message for Monitor list");
+            						  // System.out.println("Body:" + bodyStr);
+                          System.out.println("Json formant message for Monitor list");
+                        }
+                        String rawJson = convertXmlToJson(bodyStr).trim();
+                        // Split multiple JSON blocks correctly
+                        String[] jsonObjects = rawJson.split("(?<=\\})\\s*(?=\\{)");
+                        StringBuilder arrayOutput = new StringBuilder();
+                        arrayOutput.append("[\n");
+                        for (String obj : jsonObjects) {
             
+                          String cleanedObj = obj
+                          .replaceAll("\"(xmlns(:[^\"]*)?)\"\\s*:\\s*\"[^\"]*\",?", "") // removes xmlns:* entries
+                          .replaceAll("\"xsi:[^\"]*\"\\s*:\\s*\"[^\"]*\",?", ""); // removes xsi:* entries
             
-            System.out.println(final_output);
-            //run the java program that will push the json data into prometheus
-              try{
-                RunPrometheusProgram(final_output);
-              }catch (Exception e) {
-                e.printStackTrace();
-                } //end try
+                          arrayOutput.append("  {\n")
+                                     .append("    \"").append(name).append("\": ")
+                                     .append(cleanedObj.trim()).append("\n")
+                                     .append("  },\n");
+                        }
+                        // Remove the trailing comma
+                        if (arrayOutput.toString().endsWith(",\n")) {
+                            arrayOutput.setLength(arrayOutput.length() - 2);
+                            arrayOutput.append("\n");
+                        }
+                        arrayOutput.append("]");
+                        String final_output = arrayOutput.toString();
+            
+                        // FileWriter myWriter = new FileWriter("file.json", true);
+                        // myWriter.append(final_output);
+                        // myWriter.close();
+                        
+                        
+                        System.out.println(final_output);
+                        // run the java program that will push the json data into prometheus
+                          try{
+                            RunPrometheusProgram(final_output);
+                          }catch (Exception e) {
+                            e.printStackTrace();
+                            } //end try
 
 					}	            	
 				} // end try
@@ -162,8 +166,8 @@ public class XMLToJson{
 	}
 
   // Recieve xml data and pass it for parsing
-  public static String convertXmlToJson(String xml) throws Exception{
-    if(xml == null || xml.trim().isEmpty()){
+  public static String convertXmlToJson(String xml) throws Exception {
+    if (xml == null || xml.trim().isEmpty()) {
       throw new IllegalArgumentException("XML input is empty");
     }
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -317,54 +321,15 @@ private static Element parseXmlStringToElement(String xml) throws Exception {
 
 //  Push the json data into Prometheus
 public static void RunPrometheusProgram(String final_output) {
+  JsonToPrometheus jsonToPrometheus = new JsonToPrometheus();
   try {
-      String projectRoot = "C:\\Users\\Administrator\\Sample JMS files";
-      String filePath = "xml_metrics_exporter\\JsonToPrometheus.java";
-      String className = "xml_metrics_exporter.JsonToPrometheus";
-      // Compile the Java file
-      ProcessBuilder compileProcessBuilder = new ProcessBuilder("javac", "-cp", "lib/*", filePath);
-      compileProcessBuilder.directory(new File(projectRoot)); // Set working directory
-      Process compileProcess = compileProcessBuilder.start();
-      int compileExitCode = compileProcess.waitFor();
-      if (compileExitCode != 0) {
-          System.err.println("Compilation failed with exit code: " + compileExitCode);
-          BufferedReader errorReader = new BufferedReader(new InputStreamReader(compileProcess.getErrorStream()));
-          String line;
-          while ((line = errorReader.readLine()) != null) {
-              System.err.println(line);
-          }
-          return;
-      }
-      // Run the compiled Java class
-      ProcessBuilder runProcessBuilder = new ProcessBuilder("java", "-cp", ".;lib/*", className);
-      runProcessBuilder.directory(new File(projectRoot)); // Set working directory
-      Process runProcess = runProcessBuilder.start();
-      // Send input
-      BufferedWriter processWriter = new BufferedWriter(new OutputStreamWriter(runProcess.getOutputStream()));
-      processWriter.write(final_output);
-      processWriter.flush();
-      processWriter.close();
-      // Read output
-      BufferedReader outputReader = new BufferedReader(new InputStreamReader(runProcess.getInputStream()));
-      String outputLine;
-      System.out.println("Program output:");
-      while ((outputLine = outputReader.readLine()) != null) {
-          System.out.println(outputLine);
-      }
-      // Read errors
-      BufferedReader runErrorReader = new BufferedReader(new InputStreamReader(runProcess.getErrorStream()));
-      String errorLine;
-      System.err.println("Program error output:");
-      while ((errorLine = runErrorReader.readLine()) != null) {
-          System.err.println(errorLine);
-      }
-      int runExitCode = runProcess.waitFor();
-      System.out.println("Program finished with exit code: " + runExitCode);
-  } catch (IOException | InterruptedException e) {
-      e.printStackTrace();
-  }
+    jsonToPrometheus.exportJson(final_output);
+} catch (Exception e) {
+    System.err.println("Failed to push metrics to Prometheus:");
+    
 }
-    public static void main(String[] args){
+}
+    public static void main(String[] args) {
         parseArgs(args);
         XMLToJson Jc = new XMLToJson();
 
@@ -372,7 +337,7 @@ public static void RunPrometheusProgram(String final_output) {
         Session session = null;
         Destination destination = null;
         MessageConsumer consumer = null;
-    try{
+    try {
       JmsFactoryFactory ff = JmsFactoryFactory.getInstance(WMQConstants.WMQ_PROVIDER);
       JmsConnectionFactory cf = ff.createConnectionFactory();
 
@@ -380,10 +345,9 @@ public static void RunPrometheusProgram(String final_output) {
       cf.setIntProperty(WMQConstants.WMQ_PORT, port);
       cf.setStringProperty(WMQConstants.WMQ_CHANNEL, channel);
 
-        if(clientTransport){
+      if (clientTransport) {
             cf.setIntProperty(WMQConstants.WMQ_CONNECTION_MODE, WMQConstants.WMQ_CM_CLIENT);
-        }
-        else{
+        } else {
             cf.setIntProperty(WMQConstants.WMQ_CONNECTION_MODE, WMQConstants.WMQ_CM_BINDINGS);
         }
         cf.setStringProperty(WMQConstants.WMQ_QUEUE_MANAGER, queueManagerName);
@@ -396,10 +360,9 @@ public static void RunPrometheusProgram(String final_output) {
       session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
       
 
-      if(isTopic){
+      if (isTopic) {
         destination = session.createTopic(destinationName);
-      }
-      else{
+      } else {
         destination = session.createQueue(destinationName);
       }
       consumer = session.createConsumer(destination);
@@ -407,47 +370,43 @@ public static void RunPrometheusProgram(String final_output) {
       connection.start();
       try {
         Jc.consumeMessages(connection);
-      } catch (Exception e){
+      } catch (Exception e) {
         e.printStackTrace();
       }
 
       Message message;
       do{
         message = consumer.receive(timeout);
-        if(message != null){
+        if (message != null) {
             System.out.println("Recieved Message : " + message);
         }
-      }while(message != null);
+      } while(message != null);
       System.out.format("No message received in %d seconds!\n", timeout / 1000);
       recordSuccess();
-    }
-    catch (JMSException jmsex){
+    } catch (JMSException jmsex) {
         recordFailure(jmsex);
     }
     finally{
-        if(consumer != null){
+        if (consumer != null) {
             try{
                 consumer.close();
-            }
-            catch(JMSException jmsex){
+            } catch(JMSException jmsex) {
                 System.out.println("Consuner could not be closed");
                 recordFailure(jmsex);
             }
         }
-        if (session != null){
+        if (session != null) {
             try{
                 session.close();
-            }
-            catch(JMSException jmsex){
+            } catch(JMSException jmsex) {
                 System.out.println("Session could not be closed");
                 recordFailure(jmsex);
             }
         }
-        if (connection != null){
+        if (connection != null) {
             try{
                 connection.close();
-            }
-            catch(JMSException jmsex){
+            } catch(JMSException jmsex) {
                 System.out.println("Connection could not be closed");
                 recordFailure(jmsex);
             }
@@ -458,7 +417,7 @@ public static void RunPrometheusProgram(String final_output) {
     return;
 
     }
-    private static void ProcessJMSException(JMSException jmsex){
+    private static void ProcessJMSException(JMSException jmsex) {
         System.out.println(jmsex);
 
         Throwable innerException = jmsex.getLinkedException();
@@ -482,8 +441,7 @@ public static void RunPrometheusProgram(String final_output) {
         if (ex != null) {
           if (ex instanceof JMSException) {
             ProcessJMSException((JMSException) ex);
-          }
-          else {
+          } else {
             System.out.println(ex);
           }
         }
@@ -565,8 +523,7 @@ public static void RunPrometheusProgram(String final_output) {
     
           if (destinationName.startsWith("topic://")) {
             isTopic = true;
-          }
-          else {
+          } else {
             isTopic = false;
           }
         }
@@ -578,7 +535,7 @@ public static void RunPrometheusProgram(String final_output) {
         return;
       }
 
-      private static void printUsage(){
+      private static void printUsage() {
         System.out.println("\nUsage:");
         System.out.println("JmsConsumer -m queueManagerName -d destinationName [-h host -p port -l channel] [-u user -w passWord] [-t timeout_seconds]");
         return;
