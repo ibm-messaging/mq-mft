@@ -347,11 +347,7 @@ public class XMLToJson {
       connection = cf.createConnection();
       session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-      if (isTopic) {
-        destination = session.createTopic(destinationName);
-      } else {
-        destination = session.createQueue(destinationName);
-      }
+      destination = session.createTopic(destinationName);
       consumer = session.createConsumer(destination);
 
       connection.start();
