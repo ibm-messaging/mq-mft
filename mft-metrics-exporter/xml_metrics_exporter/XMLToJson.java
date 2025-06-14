@@ -65,8 +65,8 @@ public class XMLToJson {
   private static String user = null;
   private static String password = null;
   private static String queueManagerName = null;
-  private static String destinationName = null;
-  private static boolean isTopic = false;
+  private static String destinationName = "topic://SYSTEM.FTE/#";
+  private static boolean isTopic = true;
   private static boolean clientTransport = false;
   public static String name;
   public static String key1;
@@ -396,7 +396,6 @@ public class XMLToJson {
     }
 
     System.exit(status);
-    return;
 
   }
 
@@ -466,9 +465,6 @@ public class XMLToJson {
           case 'm':
             queueManagerName = args[++i];
             break;
-          case 'd':
-            destinationName = args[++i];
-            break;
           case 'u':
             user = args[++i];
             break;
@@ -495,20 +491,11 @@ public class XMLToJson {
         throw new IllegalArgumentException("A queueManager name must be specified.");
       }
 
-      if (destinationName == null) {
-        throw new IllegalArgumentException("A destination name must be specified.");
-      }
-
       if (((user == null) && (password != null)) ||
           ((user != null) && (password == null))) {
         throw new IllegalArgumentException("A userid and password must be specified together");
       }
 
-      if (destinationName.startsWith("topic://")) {
-        isTopic = true;
-      } else {
-        isTopic = false;
-      }
     } catch (Exception e) {
       System.out.println(e.getMessage());
       printUsage();
@@ -520,7 +507,7 @@ public class XMLToJson {
   private static void printUsage() {
     System.out.println("\nUsage:");
     System.out.println(
-        "XMLToJson -m queueManagerName -d destinationName [-h host -p port -l channel] [-u user -w passWord] [-t timeout_seconds]");
+        "XMLToJson -m queueManagerName [-h host -p port -l channel] [-u user -w passWord] [-t timeout_seconds]");
     return;
   }
 }

@@ -2,7 +2,7 @@
 
 IBM MQ Managed File Transfer agents publish status messages to SYSTEM.FTE topic on coordination queue manager. The status messages include agent, transfer status, monitor status and others. The content of the messages is in Xml format which may not be very useful if the data needs to be visualized. Most modern applications use Json as the format.
 
-This application subscribes to SYSTEM.FTE topic and consumes the Xml messages. The Xml messages are then converted to Json which can then be pushed to Prometheus
+This application subscribes to SYSTEM.FTE topic and consumes the Xml messages. The Xml messages are then converted to Json which can then be pushed to Prometheus.
 
 The Json format message is pushed to Prometheus using pushgateway for monitoring and visualization. The Pushgateway temporarily holds the Json format messages and lets the prometheus server scrape the data from the https pushgateway source, Grafana uses the data from the prometheus to display the dashboard.
  
@@ -63,7 +63,7 @@ This repository contains the following directories, each serving a specific purp
 
 3. In any Browser run localhost:3000 to start grafana.
 
-4. Use the below command to compile the file.
+4. Use the below command to compile the source code.
 
     for Windows
     ``` 
@@ -75,16 +75,16 @@ This repository contains the following directories, each serving a specific purp
     javac -cp ".:lib/*:/opt/mqm/java/lib/com.ibm.mq.allclient.jar" xml_metrics_exporter/*.java
     ```
 
-5. Use the below command to run the file (Replace the command with names of the queue manager name, destination name, host name, port name, channel name, user name, password and time out in seconds(optional)).
+5. Use the below command to run the application (Replace the command with names of the queue manager name, destination name, host name, port name, channel name, user name, password and time out in seconds(optional)).
 
     for Windows
     ``` 
-    java -cp ".;lib/*;C:\Program Files\IBM\MQ\java\lib\com.ibm.mq.allclient.jar" xml_metrics_exporter.XMLToJson -m <queueManagerName> -d <destinationName> -h <host> -p <port> -l <channel> -u <user> -w <passWord> -t <timeout_seconds> 
+    java -cp ".;lib/*;C:\Program Files\IBM\MQ\java\lib\com.ibm.mq.allclient.jar" xml_metrics_exporter.XMLToJson -m <queueManagerName> -h <host> -p <port> -l <channel> -u <user> -w <passWord> -t <timeout_seconds> 
     ```
 
     for Linux
     ```
-    java -cp ".:lib/*:/opt/mqm/java/lib/com.ibm.mq.allclient.jar" xml_metrics_exporter.XMLToJson -m <queueManagerName> -d <destinationName> -h <host> -p <port> -l <channel> -u <user> -w <passWord> -t <timeout_seconds>
+    java -cp ".:lib/*:/opt/mqm/java/lib/com.ibm.mq.allclient.jar" xml_metrics_exporter.XMLToJson -m <queueManagerName> -h <host> -p <port> -l <channel> -u <user> -w <passWord> -t <timeout_seconds>
     ```
 
 6. If the timeout is not provided as a parameter then the application runs infinitely.
