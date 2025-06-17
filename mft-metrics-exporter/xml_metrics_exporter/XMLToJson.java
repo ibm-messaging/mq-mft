@@ -357,15 +357,12 @@ public class XMLToJson {
         e.printStackTrace();
       }
 
-      Message message;
+      long startTime = System.currentTimeMillis();
+      long elapsedTime;
       do {
-        message = consumer.receive(timeout);
-        if (message != null) {
-          System.out.println("Recieved Message : " + message);
-        }
-      } while (message != null);
+        elapsedTime = System.currentTimeMillis() - startTime;
+      } while (timeout > elapsedTime);
       System.out.format("No message received in %d seconds!\n", timeout / 1000);
-      recordSuccess();
     } catch (JMSException jmsex) {
       recordFailure(jmsex);
     } finally {
