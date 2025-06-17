@@ -1,0 +1,9 @@
+*.class
+*.json
+JmsConsumer.java
+prometheus.java
+tdfile.xml
+trail1.java
+pom.xml
+lib/
+
