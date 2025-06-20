@@ -113,6 +113,9 @@ The repository includes scripts to:
 4) Summarize successful, pending, and failed transfers
 5) Create and query resource monitors for filesystem tracking
 
+More information can be found here: https://github.com/ibm-messaging/mq-mft/blob/master/mft-rest-python-samples/README.md
+
+
 ## Other IBM MQ MFT Exits:
 File Ordering by Steve Parsons: https://github.com/ibm-messaging/mq-mft-file-ordering
 
