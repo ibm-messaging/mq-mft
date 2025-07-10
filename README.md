@@ -101,6 +101,21 @@ This package contains two exits that helps in appending data to an existing file
 See the explanation in the code for usage details.
 https://github.com/ibm-messaging/mq-mft/tree/master/mft.merge.files
 
+## 10. Manage IBM MQ MFT Using Python Scripts
+Starting with IBM MQ v9.1, administrators can manage Managed File Transfer (MFT) using REST APIs.
+The IBM MQ MFT REST Python Samples repository demonstrates how to use these APIs via Python scripts. These samples are particularly useful for automating MFT operations or integrating MFT capabilities into custom tools and dashboards.
+
+The repository includes scripts to:
+
+1) Initiate transfers between agents
+2) Monitor specific or all transfers
+3) Filter transfers by agent, status, or file prefix
+4) Summarize successful, pending, and failed transfers
+5) Create and query resource monitors for filesystem tracking
+
+More information can be found here: https://github.com/ibm-messaging/mq-mft/blob/master/mft-rest-python-samples/README.md
+
+
 ## Other IBM MQ MFT Exits:
 File Ordering by Steve Parsons: https://github.com/ibm-messaging/mq-mft-file-ordering
 
