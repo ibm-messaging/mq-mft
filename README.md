@@ -115,6 +115,12 @@ The repository includes scripts to:
 
 More information can be found here: https://github.com/ibm-messaging/mq-mft/blob/master/mft-rest-python-samples/README.md
 
+## 11. Visualize MFT status through Prometheus
+This application enables real-time monitoring of IBM MQ Managed File Transfer (MFT) by subscribing to the SYSTEM.FTE topic on the coordination queue manager. It captures various MFT status messages — such as transfer status, agent activity, and monitor events — originally published in complex XML format.
+
+These messages are parsed and converted into simplified Json structures, making them easier to process and analyze. The Json data is then pushed to Prometheus Pushgateway, allowing Prometheus to scrape it and Grafana to visualize transfer metrics via customizable dashboards.
+
+By transforming MFT monitoring data into Json, this tool improves observability, enables easier integration with modern monitoring stacks, and facilitates better tracking of file transfers, agent health, and system status.
 
 ## Other IBM MQ MFT Exits:
 File Ordering by Steve Parsons: https://github.com/ibm-messaging/mq-mft-file-ordering
