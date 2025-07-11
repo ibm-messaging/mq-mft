@@ -122,6 +122,8 @@ These messages are parsed and converted into simplified Json structures, making 
 
 By transforming MFT monitoring data into Json, this tool improves observability, enables easier integration with modern monitoring stacks, and facilitates better tracking of file transfers, agent health, and system status.
 
+More information can be found here: https://github.com/ibm-messaging/mq-mft/blob/master/mft-metrics-exporter/README.md
+
 ## Other IBM MQ MFT Exits:
 File Ordering by Steve Parsons: https://github.com/ibm-messaging/mq-mft-file-ordering
 
