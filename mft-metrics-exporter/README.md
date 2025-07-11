@@ -11,7 +11,7 @@ Prometheus is a monitoring system that collects and stores the time-series data 
 ## Prerequisites
 
 1. Install IBM MQ and MFT.
- - Use the documentation to set up [MFT](https://www.ibm.com/docs/en/ibm-mq/9.4.x?topic=transfer-configuring-mft-first-use).
+ - Use the documentation to set up [MFT]().
 2. Install JDK - jdk-21.0.6.
 3. Use the resource to set up mft [IBM Managed File Transfer Configuration Guide](https://community.ibm.com/community/user/viewdocument/ibm-managed-file-transfer-configura?CommunityKey=183ec850-4947-49c8-9a2e-8e7c7fc46c64&tab=librarydocuments&hlmlt=BL).
 4. Install latest version of Prometheus from [here](https://prometheus.io/download/).
@@ -41,7 +41,7 @@ This repository contains the following directories, each serving a specific purp
 
 ## Getting started
 
-1. Clone the repository into the local machine using the [link](https://github.ibm.com/B-C-Surag/mft-metrics-exporter.git).
+1. Clone the repository into the local machine using the [link](https://github.com/ibm-messaging/mq-mft/tree/8d9ce84d6e694a58e0e89b0e61c1bb359f641026/mft-metrics-exporter).
 2. Check if the Queue  manager is running and the agent is ready.
 3. Start the Prometheus server, This lauches prometheus to start collecting metrics.
 4. Start the PushGateway server, This makes the pushgateway available to temprovoraly store the metrics until Prometheus scrapes it.
