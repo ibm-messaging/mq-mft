@@ -1,3 +1,4 @@
+
 import json
 import re
 from datetime import datetime
@@ -307,6 +308,7 @@ parsed_data = process_log_file(log_file_path)
 
 with open("merged_transfers.json", "w") as f:
     json.dump(parsed_data, f, indent=4)
+print("Merged Transfers saved to 'merged_transfers.json'.")
 
 scheduled_transfers = build_scheduled_transfers(parsed_data)
 with open("scheduled_transfers.json", "w") as f:
