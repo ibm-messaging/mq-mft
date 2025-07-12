@@ -45,14 +45,16 @@
 To follow this guide, ensure you have the following:
 ### 1.	 IBM MQ MFT Installed
    - MFT must be installed with the Logger component included.
-   - Refer to the official [MQ Documentation](https://www.ibm.com/docs/en/ibm-mq/9.4.x?topic=transfer-configuring-mft-first-use)
+   - Refer to the official [IBM MQ Documentation](https://www.ibm.com/docs/en/ibm-mq/9.4.x?topic=transfer-configuring-mft-first-use)
 
 ### 2.	Coordination Queue Manager Setup
    - A running MQ Coordination Queue Manager is required.
+   - Refer to the official [IBM MQ Documentation](https://www.ibm.com/docs/en/ibm-mq/9.4.x?topic=mcr-ftesetupcoordination-set-up-properties-files-directories-coordination-queue-manager)
+    
      
 ### 3.	IBM MFT CLI Tools Available
    - Commands such as fteCreateLogger, fteStartLogger, fteStopLogger, fteShowLoggerDetails and fteModifyLogger must be accessible.
-   - Refer to the official [MQ Documentation](https://www.ibm.com/docs/en/ibm-mq/9.4.x?topic=transfer-configuring-mft-logger)
+   - Refer to the official [IBM MQ Documentation](https://www.ibm.com/docs/en/ibm-mq/9.4.x?topic=transfer-configuring-mft-logger) 
   
      
 ### 4. Python Environment
@@ -76,7 +78,7 @@ To follow this guide, ensure you have the following:
 ```bash
 fteCreateLogger -p <coordinationQM> -loggerType FILE  -fileLoggerMode <mode> -fileSize <size> -fileCount <number> <loggerName>
 ```
-[IBM Documentation](https://www.ibm.com/docs/en/ibm-mq/9.4.x?topic=reference-ftecreatelogger-create-mft-file-database-logger)
+[IBM MQ Documentation](https://www.ibm.com/docs/en/ibm-mq/9.4.x?topic=reference-ftecreatelogger-create-mft-file-database-logger)
 
 1.2 **Create Required Queues:**  
 ```bash
